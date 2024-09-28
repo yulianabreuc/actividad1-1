@@ -99,3 +99,17 @@ exports.getRentById = (id) => rent.find(rent => rent.id === parseInt(id));
 
 exports.getUserRentHistory = (id) => rent.filter(rent => rent.idUser === parseInt(id));
 exports.getUserRentHistoryByState = (id, state) => rent.filter(rent => rent.idUser === parseInt(id) && rent.state === state);
+
+exports.getHistoric = () => {
+  return rent
+    .filter(rent => rent.state === 'Finished')
+    .map(rent => {
+      const book = Books.find(book => book.id === rent.idBook);
+      const user = Users.find(user => user.id === rent.idUser);
+      return {
+        ...rent,
+        book,
+        user
+      };
+    });
+};
