@@ -1,0 +1,68 @@
+# Node Express API
+
+Esta es una API de Node.js construida con Express.js. Proporciona endpoints para acceder a diferentes vistas.
+
+## Instalación
+
+1. Clona el repositorio:
+    ```bash
+    git clone <repository-url>
+    ```
+2. Navega al directorio del proyecto:
+    ```bash
+    cd <project-directory>
+    ```
+3. Instala las dependencias:
+    ```bash
+    npm install
+    ```
+
+## Ejecutando la API
+
+Para iniciar el servidor, ejecuta el siguiente comando:
+```bash
+npm start
+```
+
+## Endpoints Disponibles para views
+
+Puedes visitar las siguientes vistas a través de las URLs correspondientes:
+
+- `/home`: Proporciona la vista principal de la aplicación.
+- `/users`: Muestra una lista de usuarios.
+- `/historic`: Muestra el historial de actividades.
+
+## Endpoints Disponibles para la API
+
+La API proporciona los siguientes endpoints:
+
+- `/api/users`: Gestiona las operaciones relacionadas con los usuarios.
+    - `GET /`: Obtiene la lista de usuarios. (`router.get('/', Controller.getUsers)`)
+    - `POST /`: Crea un nuevo usuario. (`router.post('/', Controller.createUser)`)
+    - `PUT /:id`: Actualiza un usuario existente. (`router.put('/:id', Controller.updateUser)`)
+    - `DELETE /:id`: Elimina un usuario existente. (`router.delete('/:id', Controller.deleteUser)`)
+    - `GET /:id`: Obtiene un usuario específico. (`router.get('/:id', Controller.getUser)`)
+- `/api/books`: Gestiona las operaciones relacionadas con los libros.
+    - `GET /`: Obtiene la lista de libros. (`router.get('/', Controller.getBooks)`)
+    - `POST /`: Crea un nuevo libro. (`router.post('/', Controller.createBook)`)
+    - `PUT /:id`: Actualiza un libro existente. (`router.put('/:id', Controller.updateBook)`)
+    - `DELETE /:id`: Elimina un libro existente. (`router.delete('/:id', Controller.deleteBook)`)
+    - `GET /:id`: Obtiene un libro específico. (`router.get('/:id', Controller.getBook)`)
+- `/api/rent`: Gestiona las operaciones relacionadas con el alquiler de libros.
+    - `GET /`: Obtiene la lista de alquileres. (`router.get('/', Controller.getRents)`)
+    - `POST /`: Crea un nuevo alquiler. (`router.post('/', Controller.createRent)`)
+    - `PUT /:id`: Actualiza un alquiler existente. (`router.put('/:id', Controller.updateRent)`)
+    - `GET /:id`: Obtiene un alquiler específico. (`router.get('/:id', Controller.getRentById)`)
+
+
+
+    ## Propósito Educativo
+
+    Esta actividad ha sido creada para uso educativo de la Universidad Valle del Momboy. El objetivo es desarrollar una API utilizando Node.js, JavaScript y Express.js.
+
+
+
+    ## Autor
+
+    - **Nombre:** Yuliana Abreu
+    - **Correo Electrónico:** abreucarrilloyv@uvm.edu.ve
