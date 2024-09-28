@@ -23,6 +23,12 @@ exports.createRent = (req, res) => {
                 if (existingRent && existingRent.state === 'Pending') {
                     return res.status(400).json({ message: 'El libro ya está rentado y en estado pendiente' });
                 }
+
+                const userPendingRent = Model.getRentByUserId(idUser);
+                if (userPendingRent && userPendingRent.state === 'Pending') {
+                    return res.status(400).json({ message: 'El usuario ya tiene una renta pendiente por entregar' });
+                }
+                
                 Model.addRent(req.body);
                 res.status(201).json({ message: 'Rent Guardado', data: req.body });
             }

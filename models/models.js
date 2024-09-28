@@ -87,3 +87,5 @@ exports.addRent = (newData) => {
 }
 
 exports.getRentByBookId = (idBook) => rent.find(rent => rent.idBook === parseInt(idBook));
+
+exports.getRentByUserId = (idUser) => rent.find(rent => rent.idUser === parseInt(idUser));
