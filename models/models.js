@@ -94,3 +94,5 @@ exports.updateRent = (id, newData) => {
   const index = rent.findIndex(rent => rent.id === parseInt(id));
   rent[index] = { ...rent[index], ...newData };
 }
+
+exports.getRentById = (id) => rent.find(rent => rent.id === parseInt(id));
