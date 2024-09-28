@@ -5,8 +5,8 @@ exports.getRents = (req, res) => {
 };
 
 exports.createRent = (req, res) => {
-    const { idUser, idBook, date } = req.body;
-    if (!idUser || !idBook || !date) {
+    const { idUser, idBook, date_rent } = req.body;
+    if (!idUser || !idBook || !date_rent) {
         res.status(400).json({ message: 'Faltan datos requeridos: idUser, idBook, date' });
     } else {
         const user = Model.getUserById(idUser);
