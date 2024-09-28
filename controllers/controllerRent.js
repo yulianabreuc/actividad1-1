@@ -19,6 +19,10 @@ exports.createRent = (req, res) => {
             } else if (!book.disponible) {
                 res.status(400).json({ message: 'Libro no disponible' });
             } else {
+                const existingRent = Model.getRentByBookId(idBook);
+                if (existingRent && existingRent.state === 'Pending') {
+                    return res.status(400).json({ message: 'El libro ya está rentado y en estado pendiente' });
+                }
                 Model.addRent(req.body);
                 res.status(201).json({ message: 'Rent Guardado', data: req.body });
             }

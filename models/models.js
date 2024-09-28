@@ -85,3 +85,5 @@ exports.addRent = (newData) => {
   newData.state = 'Pending';
   rent.push(newData);
 }
+
+exports.getRentByBookId = (idBook) => rent.find(rent => rent.idBook === parseInt(idBook));
