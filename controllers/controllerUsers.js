@@ -59,6 +59,15 @@ exports.getUser = (req, res) => {
     if (!user) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
     } else {
-        res.status(200).json(user);
+        const { state } = req.body;
+        const validStates = ['Pending', 'Finished'];
+
+        if (state && validStates.includes(state)) {
+            const rentHistory = Model.getUserRentHistoryByState(id, state);
+            res.status(200).json({ user, rentHistory });
+            return;
+        }
+        const rentHistory = Model.getUserRentHistory(id);
+        res.status(200).json({ user, rentHistory });
     }
 }

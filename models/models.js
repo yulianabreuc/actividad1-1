@@ -96,3 +96,6 @@ exports.updateRent = (id, newData) => {
 }
 
 exports.getRentById = (id) => rent.find(rent => rent.id === parseInt(id));
+
+exports.getUserRentHistory = (id) => rent.filter(rent => rent.idUser === parseInt(id));
+exports.getUserRentHistoryByState = (id, state) => rent.filter(rent => rent.idUser === parseInt(id) && rent.state === state);
