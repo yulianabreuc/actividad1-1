@@ -82,5 +82,6 @@ exports.getRents = () => rent;
 exports.addRent = (newData) => {
   const lastId = rent.length > 0 ? rent[rent.length - 1].id : 0;
   newData.id = lastId + 1;
+  newData.state = 'Pending';
   rent.push(newData);
 }
