@@ -6,6 +6,7 @@ exports.getUsers = (req, res) => {
 };
 
 exports.createUser = (req, res) => {
+    console.log(req.body);
     const { email, password, repassword } = req.body;
     
     if (!email || !password || !repassword) {
