@@ -101,15 +101,36 @@ exports.getUserRentHistory = (id) => rent.filter(rent => rent.idUser === parseIn
 exports.getUserRentHistoryByState = (id, state) => rent.filter(rent => rent.idUser === parseInt(id) && rent.state === state);
 
 exports.getHistoric = () => {
-  return rent
-    .filter(rent => rent.state === 'Finished')
-    .map(rent => {
-      const book = Books.find(book => book.id === rent.idBook);
-      const user = Users.find(user => user.id === rent.idUser);
-      return {
-        ...rent,
-        book,
-        user
-      };
-    });
+  return rent.map(rent => {
+    const book = Books.find(book => book.id === rent.idBook);
+    const user = Users.find(user => user.id === rent.idUser);
+    return {
+      ...rent,
+      book,
+      user
+    };
+  });
 };
+
+
+/* 
+{
+    "idUser": 1,
+    "idBook": 1,
+    "date_rent": "28-09-2024",
+    "date_f": "02-10-2024"
+  }
+ // agregando una renta
+
+
+ {
+    "name": "david",
+    "lastName": "Pérez",
+    "email": "assd@gmail.com",
+    "password": "1234",
+    "repassword": "1234"
+  }
+    //agregando user
+
+ */
+ 

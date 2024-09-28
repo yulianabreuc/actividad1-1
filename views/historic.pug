@@ -25,30 +25,25 @@ html
                 border: 1px solid #ddd;
                 border-radius: 4px;
             }
-            .activo {
+            .pending {
+                background-color: #fff3cd;
+                border-color: #ffeeba;
+            }
+            .finished {
                 background-color: #d4edda;
                 border-color: #c3e6cb;
             }
-            .inactivo {
-                background-color: #f8d7da;
-                border-color: #f5c6cb;
-            }
-            .admin {
-                background-color: #d1ecf1;
-                border-color: #bee5eb;
+            p {
+                color: #000;
+                font-size: 2em;
+                font-weight: bold;
             }
     body
-        p Hola!
-        if welcomeMessage
-            p #{welcomeMessage}
-        else
-            p Bienvenido a la biblioteca publica
-
-        if users && users.length
-            h2 Lista de Usuarios Registrados
+        if historic && historic.length
+            h2 Lista de rentas
             ul
-                each user in users
-                    li(class=(user.activo ? 'activo' : 'inactivo') + (user.permission === 'admin' ? ' admin' : '')) 
-                        | #{user.name} - #{user.lastName} - #{user.email} - #{user.permission === 'admin' ? 'Admin' : 'Usuario'}
+                each his in historic
+                    li(class=(his.state === 'Pending' ? 'pending' : 'finished'))
+                        | Fecha de renta: #{his.date_rent} - Fecha final: #{his.date_f} - Libro: #{his.book.title} - Usuario: #{his.user.name} #{his.user.lastName} - Estado: #{his.state}
         else
-            p No hay usuarios registrados
+            p No hay rentas registradas por ahora

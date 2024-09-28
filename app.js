@@ -16,7 +16,7 @@ app.use('/api/rent', routesRent);
 const { getBooks, getUsers, getHistoric } = require('./models/models.js');
 app.get('/home', (req, res) => {
     const books = getBooks();
-    res.render('index', { welcomeMessage: 'Mensaje de Bienvenida', books: books });
+    res.render('index', { welcomeMessage: 'Bienvenido', books: books });
 });
 app.get('/users', (req, res) => {
     const users = getUsers();
@@ -24,7 +24,7 @@ app.get('/users', (req, res) => {
 });
 app.get('/historic', (req, res) => {
     const historic = getHistoric();
-    res.render('users', { welcomeMessage: 'Bienvenido a historic', historic: historic });
+    res.render('historic', { welcomeMessage: 'Bienvenido a historic', historic: historic });
 });
 app.get('/', (req, res) => {
     res.send('Por favor, diríjase a la ruta /home');
