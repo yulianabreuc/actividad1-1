@@ -51,3 +51,13 @@ exports.updateRent = (req, res) => {
         }
     }
 }
+
+exports.getRentById = (req, res) => {
+    const { id } = req.params;
+    const rent = Model.getRentById(id);
+    if (!rent) {
+        res.status(404).json({ message: 'Rent no encontrado' });
+    } else {
+        res.json(rent);
+    }
+}
