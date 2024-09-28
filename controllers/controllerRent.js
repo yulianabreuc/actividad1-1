@@ -35,3 +35,19 @@ exports.createRent = (req, res) => {
         }
     }
 }
+
+exports.updateRent = (req, res) => {
+    const { id } = req.params;
+    const { state } = req.body;
+    if (!state) {
+        res.status(400).json({ message: 'Faltan datos requeridos: state' });
+    } else {
+        const rent = Model.getRentById(id);
+        if (!rent) {
+            res.status(404).json({ message: 'Rent no encontrado' });
+        } else {
+            Model.updateRent(id, req.body);
+            res.json({ message: 'Rent actualizado', data: req.body });
+        }
+    }
+}
