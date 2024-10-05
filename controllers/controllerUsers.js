@@ -6,13 +6,15 @@ exports.getUsers = (req, res) => {
 };
 
 exports.createUser = (req, res) => {
-    console.log(req.body);
-    const { email, password, repassword } = req.body;
-    
-    if (!email || !password || !repassword) {
-        res.status(400).json({ message: 'Faltan datos requeridos: email, password, repetir password' });
+    console.log("body", req.body);
+    const { email, password, repassword, userName } = req.body;
+    console.log(Model.getUserByUserName(userName))
+    if (!email || !password || !repassword || !userName) {
+        res.status(400).json({ message: 'Faltan datos requeridos: email, password, repetir password, userName' });
     } else if (password !== repassword) {
         res.status(400).json({ message: 'Las contraseñas no coinciden' });
+    } else if (Model.getUserByUserName(userName)) {
+        res.status(400).json({ message: 'El nombre de usuario ya está registrado' });        
     } else {
         const user = Model.getUserByEmail(email);
         if (user) {

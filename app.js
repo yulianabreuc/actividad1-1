@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
-const routesBook = require('./routes/routesbook.js');
+
 const routesUsers = require('./routes/routesuser.js');
-const routesRent = require('./routes/routesrent.js');
+const routesPublicaciones = require('./routes/routespublicaciones.js');
+const routesAmi = require('./routes/routesamistad.js');
 
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -10,8 +11,8 @@ app.set('views', './views');
 app.use(express.json());
 
 app.use('/api/users', routesUsers);
-app.use('/api/books', routesBook);
-app.use('/api/rent', routesRent);
+app.use('/api/publi', routesPublicaciones);
+app.use('/api/amistad', routesAmi);
 
 const { getBooks, getUsers, getHistoric } = require('./models/models.js');
 app.get('/home', (req, res) => {

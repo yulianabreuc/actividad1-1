@@ -1,25 +1,17 @@
 const { permission } = require("process");
 
-let Books = [
+let Publi = [
   {
     id: 1,
     title: 'Cien Años de Soledad',
-    author: 'Gabriel García Márquez',
-    year: 1967,
-    genre: 'Magic realism',
-    pages: 417,
-    editorial: 'Sudamericana',
-    disponible: true
+    description: 'La obra narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo. La novela combina lo fantástico con lo real maravilloso y lo épico para representar la historia de América Latina y Colombia. La novela es considerada una obra maestra de la literatura en lengua española y una de las obras más traducidas y leídas en el mundo.',
+    urlMedia: 'https://images-na.ssl-images-amazon.com/images/I/51Q5pFV1HPL._SX331_BO1,204,203,200_.jpg',
   },
   {
     id: 2,
-    title: 'El Aleph',
-    author: 'Jorge Luis Borges',
-    year: 1949,
-    genre: 'Short stories',
-    pages: 146,
-    editorial: 'Losada',
-    disponible: true
+    title: 'El Amor en los Tiempos del Cólera',
+    description: 'La novela narra la vida de Florentino Ariza y Fermina Daza, quienes se enamoran en su juventud, pero Fermina decide casarse con Juvenal Urbino. Florentino jura esperarla hasta que enviude. La historia transcurre en un ambiente de realismo mágico y es considerada una de las obras más importantes de la literatura hispanoamericana.',
+    urlMedia: 'https://images-na.ssl-images-amazon.com/images/I/51y6qg0K2OL._SX331_BO1,204,203,200_.jpg',
   }
 ];
 let Users = [
@@ -27,29 +19,53 @@ let Users = [
     id: 1,
     name: 'Juan',
     lastName: 'Pérez',
+    userName: 'juanp',
     email: 'asd@gmail.com',
     password : '1234',
     repassword: '1234',
     permission: 'admin'
+  },
+  {
+    id: 2,
+    name: 'Pedro',
+    lastName: 'González',
+    userName: 'pedrog',
+    email: 'asdss@gmail.com',
   }
 ]
 
-let rent = [];
+let Comentarios = [];
+let solicitudesAmistad = [];
+
 // Exportamos los métodos que se comunicarán con la base de datos
-exports.getBooks = () => Books;
-exports.getBookById = (id) => Books.find(book => book.id === parseInt(id));
-exports.addBook = (newData) => {
-  const lastId = Books.length > 0 ? Books[Books.length - 1].id : 0;
+exports.getPubli = () => {
+  return Publi.map(publi => {
+    const publiComentarios = Comentarios.filter(comentario => comentario.idPubli === publi.id);
+    return {
+      ...publi,
+      comentarios: publiComentarios
+    };
+  });
+};
+exports.getPubliById = (id) => Publi.find(pu => pu.id === parseInt(id));
+exports.addPublicacion = (newData) => {
+  const lastId = Publi.length > 0 ? Publi[Publi.length - 1].id : 0;
   newData.id = lastId + 1;
   newData.disponible = true;
-  Books.push(newData);
+  Publi.push(newData);
 };
+exports.addComentarioPubli = (newData) => {
+  const lastId = Comentarios.length > 0 ? Comentarios[Comentarios.length - 1].id : 0;
+  newData.id = lastId + 1;
+  Comentarios.push(newData);
+}
+
 exports.updateBook = (id, newData) => {
-  const index = Books.findIndex(book => book.id === parseInt(id));
-  Books[index] = { ...Books[index], ...newData };
+  const index = Publi.findIndex(book => book.id === parseInt(id));
+  Publi[index] = { ...Publi[index], ...newData };
 }
 exports.deleteBook = (id) => {
-  Books = Books.filter(book => book.id !== parseInt(id));
+  Publi = Publi.filter(book => book.id !== parseInt(id));
 }
 
 // Exportamos los métodos Users
@@ -63,6 +79,8 @@ exports.addUser = (newData) => {
   newData.permission = 'normal';
   Users.push(newData);
 }
+
+exports.getUserByUserName = (userName) => Users.some(user => user.userName === userName);
 
 exports.updateUser = (id, newData) => {
   const index = Users.findIndex(user => user.id === parseInt(id));
@@ -102,7 +120,7 @@ exports.getUserRentHistoryByState = (id, state) => rent.filter(rent => rent.idUs
 
 exports.getHistoric = () => {
   return rent.map(rent => {
-    const book = Books.find(book => book.id === rent.idBook);
+    const book = Publi.find(book => book.id === rent.idBook);
     const user = Users.find(user => user.id === rent.idUser);
     return {
       ...rent,
@@ -112,6 +130,19 @@ exports.getHistoric = () => {
   });
 };
 
+exports.createSolicitudAmi = (newData) => {
+  const lastId = solicitudesAmistad.length > 0 ? solicitudesAmistad[solicitudesAmistad.length - 1].id : 0;
+  newData.id = lastId + 1;
+  solicitudesAmistad.push(newData);
+  return solicitudesAmistad;
+}
+
+exports.findRelacion = (userSend, userReq) => solicitudesAmistad.find(solicitud => solicitud.userSend === userSend && solicitud.userReq === userReq) ?? null;
+
+exports.updateSolicitudAmi = (id, newData) => {
+  const index = solicitudesAmistad.findIndex(solicitud => solicitud.id === parseInt(id));
+  solicitudesAmistad[index] = { ...solicitudesAmistad[index], ...newData };
+}
 
 /* 
 {
