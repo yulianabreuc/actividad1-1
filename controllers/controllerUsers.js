@@ -60,24 +60,6 @@ exports.deleteUser = (req, res) => {
     }
 };
 
-exports.getUser = (req, res) => {
-    const { id } = req.params;
-    const user = Model.getUserById(id);
-    if (!user) {
-        return res.status(404).json({ message: 'Usuario no encontrado' });
-    } else {
-        const { state } = req.body;
-        const validStates = ['Pending', 'Finished'];
-
-        if (state && validStates.includes(state)) {
-            const rentHistory = Model.getUserRentHistoryByState(id, state);
-            res.status(200).json({ user, rentHistory });
-            return;
-        }
-        const rentHistory = Model.getUserRentHistory(id);
-        res.status(200).json({ user, rentHistory });
-    }
-}
 
 exports.getUserPubli = (req, res) => {
     const { id } = req.params;

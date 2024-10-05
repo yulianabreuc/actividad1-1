@@ -122,29 +122,6 @@ exports.deleteUser = (id) => {
 }
 
 
-// Exportamos los métodos Rent  
-exports.getRents = () => rent;
-
-exports.addRent = (newData) => {
-  const lastId = rent.length > 0 ? rent[rent.length - 1].id : 0;
-  newData.id = lastId + 1;
-  newData.state = 'Pending';
-  rent.push(newData);
-}
-
-exports.getRentByUserId = (idUser) => rent.find(rent => rent.idUser === parseInt(idUser));
-
-exports.updateRent = (id, newData) => {
-  const index = rent.findIndex(rent => rent.id === parseInt(id));
-  rent[index] = { ...rent[index], ...newData };
-}
-
-exports.getRentById = (id) => rent.find(rent => rent.id === parseInt(id));
-
-exports.getUserRentHistory = (id) => rent.filter(rent => rent.idUser === parseInt(id));
-exports.getUserRentHistoryByState = (id, state) => rent.filter(rent => rent.idUser === parseInt(id) && rent.state === state);
-
-
 exports.createSolicitudAmi = (newData) => {
   const lastId = solicitudesAmistad.length > 0 ? solicitudesAmistad[solicitudesAmistad.length - 1].id : 0;
   newData.id = lastId + 1;
