@@ -38,12 +38,26 @@ html
                 font-size: 2em;
                 font-weight: bold;
             }
+            .comments {
+                margin-top: 10px; /* Margin to separate from publication details */
+                padding-left: 20px; /* Indentation for comments */
+            }
+            .comment {
+                margin-top: 5px; /* Margin between comments */
+                color: #666; /* Different color for comments */
+            }
     body
-        if historic && historic.length
-            h2 Lista de rentas
+        if feed && feed.length
+            h2 Feed
             ul
-                each his in historic
-                    li(class=(his.state === 'Pending' ? 'pending' : 'finished'))
-                        | Fecha de renta: #{his.date_rent} - Fecha final: #{his.date_f} - Libro: #{his.book.title} - Usuario: #{his.user.name} #{his.user.lastName} - Estado: #{his.state}
+                each fe in feed
+                    li
+                        span.title #{fe.title}
+                        span.description #{fe.description}
+                        span.user #{fe.user.userName}
+                        if fe.comments && fe.comments.length
+                            div.comments
+                                each comment in fe.comments
+                                    div.comment #{comment}
         else
-            p No hay rentas registradas por ahora
+            p No registros para ese usuario actual

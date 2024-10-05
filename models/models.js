@@ -1,4 +1,3 @@
-const { permission } = require("process");
 
 let Publi = [
   {
@@ -13,14 +12,14 @@ let Publi = [
     title: 'El Amor en los Tiempos del Cólera',
     description: 'La novela narra la vida de Florentino Ariza y Fermina Daza, quienes se enamoran en su juventud, pero Fermina decide casarse con Juvenal Urbino. Florentino jura esperarla hasta que enviude. La historia transcurre en un ambiente de realismo mágico y es considerada una de las obras más importantes de la literatura hispanoamericana.',
     urlMedia: 'https://images-na.ssl-images-amazon.com/images/I/51y6qg0K2OL._SX331_BO1,204,203,200_.jpg',
-    idUser:2
+    idUser:1
   },
   {
     id: 3,
     title: 'asdasd',
     description: 'asdsdad.',
     urlMedia: 'https://images-na.ssl-images-amazon.com/images/I/51y6qg0K2OL._SX331_BO1,204,203,200_.jpg',
-    idUser:2
+    idUser:1
   }
 ];
 let Users = [
@@ -57,9 +56,11 @@ let solicitudesAmistad = [
 exports.getPubli = () => {
   return Publi.map(publi => {
     const publiComentarios = Comentarios.filter(comentario => comentario.idPubli === publi.id);
+    const user = Users.find(user => user.id === publi.idUser);
     return {
       ...publi,
-      comentarios: publiComentarios
+      comentarios: publiComentarios,
+      user: user ? { id: user.id, name: user.name, lastName: user.lastName, userName: user.userName } : null
     };
   });
 };
@@ -91,8 +92,8 @@ exports.updatePublicacion = (id, newData) => {
   Publi[index] = { ...Publi[index], ...newData };
 }
 
-exports.deleteBook = (id) => {
-  Publi = Publi.filter(book => book.id !== parseInt(id));
+exports.deletePubli = (id) => {
+  Publi = Publi.filter(pub => pub.id !== parseInt(id));
 }
 
 // Exportamos los métodos Users
@@ -131,8 +132,6 @@ exports.addRent = (newData) => {
   rent.push(newData);
 }
 
-exports.getRentByBookId = (idBook) => rent.find(rent => rent.idBook === parseInt(idBook));
-
 exports.getRentByUserId = (idUser) => rent.find(rent => rent.idUser === parseInt(idUser));
 
 exports.updateRent = (id, newData) => {
@@ -145,17 +144,6 @@ exports.getRentById = (id) => rent.find(rent => rent.id === parseInt(id));
 exports.getUserRentHistory = (id) => rent.filter(rent => rent.idUser === parseInt(id));
 exports.getUserRentHistoryByState = (id, state) => rent.filter(rent => rent.idUser === parseInt(id) && rent.state === state);
 
-exports.getHistoric = () => {
-  return rent.map(rent => {
-    const book = Publi.find(book => book.id === rent.idBook);
-    const user = Users.find(user => user.id === rent.idUser);
-    return {
-      ...rent,
-      book,
-      user
-    };
-  });
-};
 
 exports.createSolicitudAmi = (newData) => {
   const lastId = solicitudesAmistad.length > 0 ? solicitudesAmistad[solicitudesAmistad.length - 1].id : 0;
@@ -175,7 +163,7 @@ exports.getUserPublicacionesById = (id) => {
   const publiUser = Publi.filter(publi => publi.idUser === parseInt(id));
   return publiUser;
 }
-exports.getFeed = (id) => {
+exports.getFeedID = (id) => {
   const friends = solicitudesAmistad
     .filter(solicitud => (solicitud.userSend === parseInt(id) || solicitud.userReq === parseInt(id)) && solicitud.estado === 'aceptado')
     .map(solicitud => solicitud.userSend === parseInt(id) ? solicitud.userReq : solicitud.userSend);
@@ -186,8 +174,43 @@ exports.getFeed = (id) => {
 
   return latestPublications;
 }
+exports.getFeed = (id) => {
+  let latestPublications;
 
+  if (id) {
+    const friends = solicitudesAmistad
+      .filter(solicitud => (solicitud.userSend === parseInt(id) || solicitud.userReq === parseInt(id)) && solicitud.estado === 'aceptado')
+      .map(solicitud => solicitud.userSend === parseInt(id) ? solicitud.userReq : solicitud.userSend);
+    latestPublications = friends.map(friendId => {
+      const friendPublications = Publi.filter(publi => publi.idUser === friendId);
+      return friendPublications.length > 0 ? friendPublications[friendPublications.length - 1] : null;
+    }).filter(publi => publi !== null);
+  } else {
+    const users = Users.map(user => user.id);
+    latestPublications = users.map(userId => {
+      const userPublications = Publi.filter(publi => publi.idUser === userId);
+      return userPublications.length > 0 ? userPublications[userPublications.length - 1] : null;
+    }).filter(publi => publi !== null);
+  }
+
+  return latestPublications.map(publi => {
+    const publiComentarios = Comentarios.filter(comentario => comentario.idPubli === publi.id);
+    const user = Users.find(user => user.id === publi.idUser);
+    return {
+      ...publi,
+      comentarios: publiComentarios,
+      user: user ? { id: user.id, name: user.name, lastName: user.lastName, userName: user.userName } : null
+    };
+  });
+}
 exports.getSolicitudAmiById = (id) => solicitudesAmistad.find(solicitud => solicitud.id === parseInt(id));
+
+exports.getSolicitudAmiByIdUserIdFriend = (idUser, idFriend) => solicitudesAmistad.find(solicitud => (solicitud.userSend === parseInt(idUser) && solicitud.userReq === parseInt(idFriend)));
+
+exports.deleteSolicitudAmistad = (id) => {
+  solicitudesAmistad = solicitudesAmistad.filter(solicitud => solicitud.id !== parseInt(id));
+}
+
 
 exports.getSolicitudesAmistad = () => solicitudesAmistad;
 

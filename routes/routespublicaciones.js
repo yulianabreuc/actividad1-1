@@ -6,7 +6,7 @@ router.get('/', Controller.getPublicaciones);
 router.post('/', Controller.createPublicacion);
 router.post('/comment', Controller.createComentarioPubli);
 router.put('/:id', Controller.updatePublicacion);
-router.delete('/:id', Controller.deleteBook);
+router.delete('/:id', Controller.deletePubli);
 router.get('/:id', Controller.getPublicacion);
 
 

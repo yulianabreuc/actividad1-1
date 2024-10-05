@@ -16,18 +16,18 @@ app.use('/api/publi', routesPublicaciones);
 app.use('/api/amistad', routesAmi);
 app.use('/api/feed', routesfeed);
 
-const { getBooks, getUsers, getHistoric } = require('./models/models.js');
+const { getPubli, getUsers, getFeed } = require('./models/models.js');
 app.get('/home', (req, res) => {
-    const books = getBooks();
-    res.render('index', { welcomeMessage: 'Bienvenido', books: books });
+    const publicaciones = getPubli();
+    res.render('index', { welcomeMessage: 'Bienvenido', publicaciones: publicaciones });
 });
 app.get('/users', (req, res) => {
     const users = getUsers();
     res.render('users', { welcomeMessage: 'Usuarios Registrados', users: users });
 });
-app.get('/historic', (req, res) => {
-    const historic = getHistoric();
-    res.render('historic', { welcomeMessage: 'Bienvenido a historic', historic: historic });
+app.get('/feed', (req, res) => {
+    const feed = getFeed();
+    res.render('feed', { welcomeMessage: 'Bienvenido a feed de user', feed: feed });
 });
 app.get('/', (req, res) => {
     res.send('Por favor, diríjase a la ruta /home');

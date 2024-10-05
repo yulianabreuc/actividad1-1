@@ -46,3 +46,21 @@ exports.updateSolicitudAmistad = (req, res) => {
         }
     }
 }
+
+exports.deleteSolicitudAmistad = (req, res) => {
+    const { id } = req.params;
+    const { idAmigo } = req.body;
+    if (!idAmigo) {
+        return res.status(400).json({ error: 'Se requiere el idAmigo para eliminar la amistad' });
+    } else {
+        console.log(id)
+        console.log(idAmigo)
+        const sol = Model.getSolicitudAmiByIdUserIdFriend(id, idAmigo);
+        if (!sol) {
+            return res.status(404).json({ error: 'no son amigos' });
+        } else {
+            Model.deleteSolicitudAmistad(sol.id);
+            res.status(200).json({ message: 'Solicitud Eliminada' });
+        }
+    }
+}

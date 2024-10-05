@@ -22,18 +22,29 @@ html
         padding: 0;
       }
       li {
-        margin: 5px 0;
+        margin: 15px 0; /* Increased margin for more spacing */
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 4px;
+        background-color: #fff; /* Added background color for better differentiation */
       }
-      .disponible {
-        background-color: #d4edda;
-        border-color: #c3e6cb;
+      span.description {
+        display: block; /* Display description on a new line */
+        color: #555; /* Different color for description */
+        margin-top: 5px; /* Margin to separate from title */
       }
-      .no-disponible {
-        background-color: #f8d7da;
-        border-color: #f5c6cb;
+      span.user {
+        display: block; /* Display username on a new line */
+        color: #888; /* Different color for username */
+        margin-top: 5px; /* Margin to separate from description */
+      }
+      .comments {
+        margin-top: 10px; /* Margin to separate from publication details */
+        padding-left: 20px; /* Indentation for comments */
+      }
+      .comment {
+        margin-top: 5px; /* Margin between comments */
+        color: #666; /* Different color for comments */
       }
   body
     p Hola!
@@ -42,10 +53,17 @@ html
     else
       p Bienvenido a la biblioteca publica
 
-    if books && books.length
-      h2 Lista de Libros
+    if publicaciones && publicaciones.length
+      h2 Publiaciones
       ul
-        each book in books
-          li(class=book.disponible ? 'disponible' : 'no-disponible') #{book.title} - #{book.author} - #{book.year} - #{book.disponible ? 'Disponible' : 'No Disponible'}
+        each publi in publicaciones
+          li
+            span.title #{publi.title}
+            span.description #{publi.description}
+            span.user #{publi.user.userName}
+            if publi.comments && publi.comments.length
+              div.comments
+                each comment in publi.comments
+                  div.comment #{comment}
     else
-      p No hay libros disponibles
+      p No hay publiaciones generales

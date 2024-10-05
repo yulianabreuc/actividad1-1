@@ -27,8 +27,8 @@ exports.createPublicacion = (req, res) => {
 
 exports.createComentarioPubli = (req, res) => {
     const { idPubli } = req.body;
-    const book = Model.getPubliById(idPubli);
-    if (!book) {
+    const publi = Model.getPubliById(idPubli);
+    if (!publi) {
         return res.status(404).json({ message: 'Publicacion no encontrado' });
     } else {
         const { comment, user } = req.body;
@@ -56,13 +56,13 @@ exports.updatePublicacion = (req, res) => {
         }
     }
 }
-exports.deleteBook = (req, res) => {
+exports.deletePubli = (req, res) => {
     const { id } = req.params;
-    const book = Model.getPubliById(id);
-    if (!book) {
-        return res.status(404).json({ message: 'Libro no encontrado' });
+    const publi = Model.getPubliById(id);
+    if (!publi) {
+        return res.status(404).json({ message: 'Publicacion no encontrado' });
     } else {
-        Model.deleteBook(id);
-        res.status(200).json({ message: 'Libro Eliminado' });
+        Model.deletePubli(id);
+        res.status(200).json({ message: 'Publicacion Eliminada' });
     }
 };

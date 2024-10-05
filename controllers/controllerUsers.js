@@ -51,9 +51,9 @@ exports.deleteUser = (req, res) => {
     if (!user) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
     } else {
-        const rentHistory = Model.getUserRentHistory(id);
-        if (rentHistory && rentHistory.length > 0) {
-            return res.status(400).json({ message: 'El usuario tiene rentas y no puede ser eliminado' });
+        const publicaciones = Model.getUserPublicacionesById(id);
+        if (publicaciones && publicaciones.length > 0) {
+            return res.status(400).json({ message: 'El usuario tiene publicaciones y no puede ser eliminado' });
         }
         Model.deleteUser(id);
         res.status(200).json({ message: 'Usuario Eliminado' });
