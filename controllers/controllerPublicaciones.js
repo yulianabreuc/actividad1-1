@@ -4,13 +4,13 @@ exports.getPublicaciones = (req, res) => {
     res.json(Model.getPubli());
 };
 
-exports.getBook = (req, res) => {
+exports.getPublicacion = (req, res) => {
     const { id } = req.params;
-    const book = Model.getBookById(id);
-    if (!book) {
-        return res.status(404).json({ message: 'Libro no encontrado' });
+    const publi = Model.getPubliById(id);
+    if (!publi) {
+        return res.status(404).json({ message: 'Publicacion no encontrado' });
     } else {
-        res.json(Model.getBookById(id));
+        res.json(Model.getPubliById(id));
     }
 };
 
@@ -41,24 +41,24 @@ exports.createComentarioPubli = (req, res) => {
     }
 }
 
-exports.updateBook = (req, res) => {
+exports.updatePublicacion = (req, res) => {
     const { id } = req.params;
-    const book = Model.getBookById(id);
-    if (!book) {
-        return res.status(404).json({ message: 'Libro no encontrado' });
+    const publi = Model.getPubliById(id);
+    if (!publi) {
+        return res.status(404).json({ message: 'Publicacion no encontrada' });
     } else {
-        const { title, author, year } = req.body;
-        if (!title || !author || !year) {
-            res.status(400).json({ message: 'Faltan datos requeridos: title, author, year' });
+        const { title, description, urlMedia } = req.body;
+        if (!title || !description || !urlMedia) {
+            res.status(400).json({ message: 'Faltan datos requeridos: title, description, urlMedia' });
         } else {
-            Model.updateBook(id, req.body);
-            res.status(200).json({ message: 'Libro Actualizado', data: req.body });
+            Model.updatePublicacion(id, req.body);
+            res.status(200).json({ message: 'Publicacion Actualizada', data: req.body });
         }
     }
 }
 exports.deleteBook = (req, res) => {
     const { id } = req.params;
-    const book = Model.getBookById(id);
+    const book = Model.getPubliById(id);
     if (!book) {
         return res.status(404).json({ message: 'Libro no encontrado' });
     } else {

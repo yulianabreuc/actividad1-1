@@ -1,5 +1,10 @@
 const Model = require('../models/models.js');
 
+
+exports.getSolicitudesAmistad = (req, res) => {
+    res.json(Model.getSolicitudesAmistad());
+}
+
 exports.createSolicitudAmistad = (req, res) => {
     const { userSend, userReq } = req.body;   
     if (!userSend || !userReq) {
@@ -22,6 +27,22 @@ exports.createSolicitudAmistad = (req, res) => {
             req.body.estado = 'pendiente';
             const solCreada = Model.createSolicitudAmi(req.body);
             res.status(201).json({ message: 'solicitud Guardada', solCreada });
+        }
+    }
+}
+
+exports.updateSolicitudAmistad = (req, res) => {
+    const { id } = req.params;
+    const { estado } = req.body;
+    if (!estado) {
+        return res.status(400).json({ error: 'Se requiere el estado de la solicitud' });
+    } else {
+        const sol = Model.getSolicitudAmiById(id);
+        if (!sol) {
+            return res.status(404).json({ error: 'Solicitud no encontrada' });
+        } else {
+            const SolActu = Model.updateSolicitudAmi(id, req.body);
+            res.status(200).json({ message: 'Solicitud Modificada', SolActu });
         }
     }
 }

@@ -31,7 +31,7 @@ exports.createUser = (req, res) => {
 
 exports.updateUser = (req, res) => {
     const { id } = req.params;
-    const { email, password, repassword } = req.body;
+    const { email } = req.body;
     if (!email) {
         res.status(400).json({ message: 'Debe ingresar el email' });
     } else {
@@ -76,5 +76,15 @@ exports.getUser = (req, res) => {
         }
         const rentHistory = Model.getUserRentHistory(id);
         res.status(200).json({ user, rentHistory });
+    }
+}
+
+exports.getUserPubli = (req, res) => {
+    const { id } = req.params;
+    const userPublicaciones = Model.getUserPublicacionesById(id);
+    if (!userPublicaciones) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+    } else {
+        res.json(userPublicaciones);
     }
 }

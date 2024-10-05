@@ -5,9 +5,9 @@ const Controller = require('../controllers/controllerPublicaciones.js');
 router.get('/', Controller.getPublicaciones);
 router.post('/', Controller.createPublicacion);
 router.post('/comment', Controller.createComentarioPubli);
-router.put('/:id', Controller.updateBook);
+router.put('/:id', Controller.updatePublicacion);
 router.delete('/:id', Controller.deleteBook);
-router.get('/:id', Controller.getBook);
+router.get('/:id', Controller.getPublicacion);
 
 
 module.exports = router;

@@ -6,12 +6,21 @@ let Publi = [
     title: 'Cien Años de Soledad',
     description: 'La obra narra la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo. La novela combina lo fantástico con lo real maravilloso y lo épico para representar la historia de América Latina y Colombia. La novela es considerada una obra maestra de la literatura en lengua española y una de las obras más traducidas y leídas en el mundo.',
     urlMedia: 'https://images-na.ssl-images-amazon.com/images/I/51Q5pFV1HPL._SX331_BO1,204,203,200_.jpg',
+    idUser:1
   },
   {
     id: 2,
     title: 'El Amor en los Tiempos del Cólera',
     description: 'La novela narra la vida de Florentino Ariza y Fermina Daza, quienes se enamoran en su juventud, pero Fermina decide casarse con Juvenal Urbino. Florentino jura esperarla hasta que enviude. La historia transcurre en un ambiente de realismo mágico y es considerada una de las obras más importantes de la literatura hispanoamericana.',
     urlMedia: 'https://images-na.ssl-images-amazon.com/images/I/51y6qg0K2OL._SX331_BO1,204,203,200_.jpg',
+    idUser:2
+  },
+  {
+    id: 3,
+    title: 'asdasd',
+    description: 'asdsdad.',
+    urlMedia: 'https://images-na.ssl-images-amazon.com/images/I/51y6qg0K2OL._SX331_BO1,204,203,200_.jpg',
+    idUser:2
   }
 ];
 let Users = [
@@ -35,7 +44,14 @@ let Users = [
 ]
 
 let Comentarios = [];
-let solicitudesAmistad = [];
+let solicitudesAmistad = [
+  {
+    "userSend": 1,
+    "userReq": 2,
+    "estado": "aceptado",
+    "id": 1
+  }
+];
 
 // Exportamos los métodos que se comunicarán con la base de datos
 exports.getPubli = () => {
@@ -47,7 +63,17 @@ exports.getPubli = () => {
     };
   });
 };
-exports.getPubliById = (id) => Publi.find(pu => pu.id === parseInt(id));
+exports.getPubliById = (id) => {
+  const publi = Publi.find(pu => pu.id === parseInt(id));
+  if (publi) {
+    const publiComentarios = Comentarios.filter(comentario => comentario.idPubli === publi.id);
+    return {
+      ...publi,
+      comentarios: publiComentarios
+    };
+  }
+  return null;
+};
 exports.addPublicacion = (newData) => {
   const lastId = Publi.length > 0 ? Publi[Publi.length - 1].id : 0;
   newData.id = lastId + 1;
@@ -60,10 +86,11 @@ exports.addComentarioPubli = (newData) => {
   Comentarios.push(newData);
 }
 
-exports.updateBook = (id, newData) => {
-  const index = Publi.findIndex(book => book.id === parseInt(id));
+exports.updatePublicacion = (id, newData) => {
+  const index = Publi.findIndex(pub => pub.id === parseInt(id));
   Publi[index] = { ...Publi[index], ...newData };
 }
+
 exports.deleteBook = (id) => {
   Publi = Publi.filter(book => book.id !== parseInt(id));
 }
@@ -144,20 +171,41 @@ exports.updateSolicitudAmi = (id, newData) => {
   solicitudesAmistad[index] = { ...solicitudesAmistad[index], ...newData };
 }
 
+exports.getUserPublicacionesById = (id) => {
+  const publiUser = Publi.filter(publi => publi.idUser === parseInt(id));
+  return publiUser;
+}
+exports.getFeed = (id) => {
+  const friends = solicitudesAmistad
+    .filter(solicitud => (solicitud.userSend === parseInt(id) || solicitud.userReq === parseInt(id)) && solicitud.estado === 'aceptado')
+    .map(solicitud => solicitud.userSend === parseInt(id) ? solicitud.userReq : solicitud.userSend);
+  const latestPublications = friends.map(friendId => {
+    const friendPublications = Publi.filter(publi => publi.idUser === friendId);
+    return friendPublications.length > 0 ? friendPublications[friendPublications.length - 1] : null;
+  }).filter(publi => publi !== null);
+
+  return latestPublications;
+}
+
+exports.getSolicitudAmiById = (id) => solicitudesAmistad.find(solicitud => solicitud.id === parseInt(id));
+
+exports.getSolicitudesAmistad = () => solicitudesAmistad;
+
+
 /* 
 {
-    "idUser": 1,
-    "idBook": 1,
-    "date_rent": "28-09-2024",
-    "date_f": "02-10-2024"
-  }
- // agregando una renta
+    "userSend": 1,
+    "userReq": 2
+
+}
+ // solicitud de amistad
 
 
  {
     "name": "david",
     "lastName": "Pérez",
     "email": "assd@gmail.com",
+    "userName": "davidp",
     "password": "1234",
     "repassword": "1234"
   }
