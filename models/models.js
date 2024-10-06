@@ -41,7 +41,7 @@ let Users = [
     email: 'asdss@gmail.com',
   },
     {
-    id: 2,
+    id: 3,
     name: 'Yuliana',
     lastName: 'Abreu',
     userName: 'yulianabreu',
@@ -85,7 +85,6 @@ exports.getPubliById = (id) => {
 exports.addPublicacion = (newData) => {
   const lastId = Publi.length > 0 ? Publi[Publi.length - 1].id : 0;
   newData.id = lastId + 1;
-  newData.disponible = true;
   Publi.push(newData);
 };
 exports.addComentarioPubli = (newData) => {
