@@ -5,6 +5,12 @@ exports.getUsers = (req, res) => {
     res.json(Model.getUsers());
 };
 
+exports.getUser = (req, res) => {
+    const { id } = req.params;
+    const user = Model.getUserById(id);
+    res.json(user);
+}
+
 exports.createUser = (req, res) => {
     console.log("body", req.body);
     const { email, password, repassword, userName } = req.body;
