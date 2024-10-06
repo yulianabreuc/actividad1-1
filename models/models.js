@@ -12,14 +12,14 @@ let Publi = [
     title: 'El Amor en los Tiempos del Cólera',
     description: 'La novela narra la vida de Florentino Ariza y Fermina Daza, quienes se enamoran en su juventud, pero Fermina decide casarse con Juvenal Urbino. Florentino jura esperarla hasta que enviude. La historia transcurre en un ambiente de realismo mágico y es considerada una de las obras más importantes de la literatura hispanoamericana.',
     urlMedia: 'https://images-na.ssl-images-amazon.com/images/I/51y6qg0K2OL._SX331_BO1,204,203,200_.jpg',
-    idUser:1
+    idUser:2
   },
   {
     id: 3,
-    title: 'asdasd',
-    description: 'asdsdad.',
+    title: 'El Principito',
+    description: 'El Principito narra la historia de un piloto que, mientras intenta reparar su avión averiado en medio del desierto del Sahara, se topa con un pequeño príncipe proveniente del asteroide B 612. Él le pide insistentemente que le dibuje un cordero y que nunca olvida una pregunta...',
     urlMedia: 'https://images-na.ssl-images-amazon.com/images/I/51y6qg0K2OL._SX331_BO1,204,203,200_.jpg',
-    idUser:1
+    idUser:3
   }
 ];
 let Users = [
@@ -27,7 +27,7 @@ let Users = [
     id: 1,
     name: 'Juan',
     lastName: 'Pérez',
-    userName: 'juanp',
+    userName: 'juanperez',
     email: 'asd@gmail.com',
     password : '1234',
     repassword: '1234',
@@ -37,8 +37,15 @@ let Users = [
     id: 2,
     name: 'Pedro',
     lastName: 'González',
-    userName: 'pedrog',
+    userName: 'pedrogomez',
     email: 'asdss@gmail.com',
+  },
+    {
+    id: 2,
+    name: 'Yuliana',
+    lastName: 'Abreu',
+    userName: 'yulianabreu',
+    email: 'asdssd@gmail.com',
   }
 ]
 
