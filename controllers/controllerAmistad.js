@@ -14,7 +14,7 @@ exports.createSolicitudAmistad = (req, res) => {
     } else {
         const relacion = Model.findRelacion(userSend, userReq);
         if (relacion) {
-            if (relacion.estado === 'pendiente') {
+            if (relacion.estado === 'pendiente' || relacion.estado === 'aceptado') {
                 return res.status(400).json({ error: 'Ya existe una solicitud de amistad pendiente entre estos usuarios' });
             } else if (relacion.estado === 'agregado') {
                 return res.status(400).json({ error: 'Estos usuarios ya son amigos' });
@@ -22,6 +22,8 @@ exports.createSolicitudAmistad = (req, res) => {
                 req.body.estado = 'pendiente';
                 const SolActu = Model.updateSolicitudAmi(relacion.id, req.body);
                 res.status(201).json({ message: 'solicitud Modificada', SolActu });
+            }else{
+                res.status(201).json({ message: 'No entra en niguna condi' });
             }
         } else {
             req.body.estado = 'pendiente';
